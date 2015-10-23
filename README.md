@@ -23,7 +23,7 @@ console.log(a('banana')); // "a banana"
 
 ### Browser
 
-Just serve `dist/indefinite.min.js` however you serve javascript, then call `indefinite("noun")`. The `indefinite` funciton is added to window.
+Just serve `dist/indefinite.min.js` however you serve javascript, then call `indefinite("noun")`. The `indefinite` function is added to window.
 
 ## Contributing
 
