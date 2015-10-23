@@ -1,4 +1,4 @@
 module.exports = {
-  tests: ['test/helpers/**/*.coffee', 'test/**/*.coffee'],
+  tests: ['test/**/*.coffee'],
   lib: ['lib/**/*.js']
 };

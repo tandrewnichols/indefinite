@@ -1,5 +1,5 @@
 describe 'indefinite', ->
-  Given -> @subject = require 'lib/indefinite'
+  Given -> @subject = require '../lib/indefinite'
 
   context 'a noun that starts with a vowel', ->
     Then -> @subject('apple').should.eql 'an apple'

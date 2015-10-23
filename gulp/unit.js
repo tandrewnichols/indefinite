@@ -3,7 +3,7 @@ var config = require('./config');
 var mocha = require('gulp-mocha');
 
 gulp.task('unit', function() {
-  return gulp.src(config.tests.unit, { read: false })
+  return gulp.src(config.tests, { read: false })
     .pipe(mocha({
       reporter: 'dot',
       ui: 'mocha-given',
