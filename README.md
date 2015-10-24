@@ -19,6 +19,10 @@ var a = require('indefinite');
 
 console.log(a('apple')); // "an apple"
 console.log(a('banana')); // "a banana"
+
+// You can also capitalize the article by passing "true" as the second argument
+console.log(a('apple', true)); // 'An apple'
+console.log(a('banana', true)); // 'A banana'
 ```
 
 ### Browser
