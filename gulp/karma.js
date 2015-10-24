@@ -17,7 +17,7 @@ gulp.task('phantom', function(done) {
   }, done).start();
 });
 
-gulp.task('tdd', function(done) {
+gulp.task('ci', function(done) {
   new Server({
     configFile: path.resolve(__dirname, '../karma.conf.js')
   }, done).start();
