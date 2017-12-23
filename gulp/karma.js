@@ -1,15 +1,15 @@
-var gulp = require('gulp');
-var Server = require('karma').Server;
-var path = require('path');
+const gulp = require('gulp');
+const Server = require('karma').Server;
+const path = require('path');
 
-gulp.task('browser', function(done) {
+gulp.task('browser', (done) => {
   new Server({
     configFile: path.resolve(__dirname, '../karma.conf.js'),
     singleRun: true
   }, done).start();
 });
 
-gulp.task('phantom', function(done) {
+gulp.task('phantom', (done) => {
   new Server({
     configFile: path.resolve(__dirname, '../karma.conf.js'),
     browsers: ['PhantomJS'],
@@ -17,7 +17,7 @@ gulp.task('phantom', function(done) {
   }, done).start();
 });
 
-gulp.task('ci', function(done) {
+gulp.task('ci', (done) => {
   new Server({
     configFile: path.resolve(__dirname, '../karma.conf.js')
   }, done).start();

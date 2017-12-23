@@ -1,13 +1,14 @@
-var gulp = require('gulp');
-var cp = require('child_process');
-var codeclimate = require('gulp-codeclimate-reporter');
+const gulp = require('gulp');
+const codeclimate = require('gulp-codeclimate-reporter');
 
-gulp.task('codeclimate', function() {
-  if (process.version.indexOf('v4') > -1) {
-    gulp.src('coverage/lcov.info', { read: false })
+gulp.task('codeclimate', (done) => {
+  if (process.version.indexOf('v8') > -1) {
+    return gulp.src('coverage/lcov.info', { read: false })
       .pipe(codeclimate({
-        token: '7db887541ba6df3075e3a6ead2456b0ddf6bee65969308191c62afe1ea461566'
+        token: process.env.CODECLIMATE_REPO_TOKEN
       }));
+  } else {
+    done();
   }
 });
 

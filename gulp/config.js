@@ -1,4 +1,7 @@
+const path = require('path');
+
 module.exports = {
-  tests: ['test/**/*.coffee'],
+  root: path.resolve(__dirname, '..') + path.sep,
+  tests: ['test/**/*.js'],
   lib: ['lib/**/*.js']
 };

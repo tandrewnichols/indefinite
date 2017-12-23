@@ -1,6 +1,6 @@
-var gulp = require('gulp');
-var config = require('./config');
+const gulp = require('gulp');
+const config = require('./config');
 
-gulp.task('watch', function() {
-  gulp.watch(config.lib.concat(config.tests), ['unit']);
+gulp.task('watch', () => {
+  gulp.watch(config.lib.concat(config.tests), gulp.series('cover'));
 });

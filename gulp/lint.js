@@ -1,17 +1,11 @@
-var gulp = require('gulp');
-var config = require('./config');
-var jshint = require('gulp-jshint');
+const gulp = require('gulp');
+const config = require('./config');
+const eslint = require('gulp-eslint');
 
-gulp.task('lint', function() {
+gulp.task('lint', () => {
   return gulp.src(config.lib)
-    .pipe(jshint({
-      lookup: false,
-      eqeqeq: true,
-      es3: true,
-      indent: 2,
-      newcap: true,
-      quotmark: 'single',
-      boss: true
-    })).pipe(jshint.reporter('jshint-stylish'));
+    .pipe(eslint(config.root + '.eslint.json'))
+    .pipe(eslint.format('node_modules/eslint-codeframe-formatter'))
+    .pipe(eslint.failAfterError());
 });
 
