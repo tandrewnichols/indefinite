@@ -11,6 +11,7 @@ engines:
         - javascript
 exclude_patterns:
   - ".*.*"
+  - ".*"
   - "dist/**.js"
   - "gulp/**.js"
   - "test/**.*"
