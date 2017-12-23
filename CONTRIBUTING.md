@@ -4,7 +4,7 @@ First, contributions are welcome! I expect smaller requests to be handled withou
 
 ## Style
 
-Please try to adhere, as close as possible, to the style and structure already present in this repository. I understand that people like things different ways, but as this is my repository, we'll be using my style preferences. If your pull request does not conform to this style, I'll simply ask you to clean it up. Please don't be offended. It doesn't mean I think your style preference is wrong or that mine is better. I just believe consistency is important in a repository. Notably, that means (among other things):
+Please try to adhere, as close as possible, to the style and structure already present in this repository. Please don't be offended if I ask you clean something up, as consistency is important. Please see the `.eslint.json` config for a comprehensive style guide. Some of the more salient points follow:
 
 1. Two spaces. No literal tabs.
 2. "Cuddled" elses and else ifs: e.g. `} else {`
@@ -21,7 +21,13 @@ Please try to adhere, as close as possible, to the style and structure already p
       foo: function() {
     ```
 
-    unless you're exporting a single a function.
+    unless you're exporting a single a function, like
+
+    ```
+    module.exports = function() {
+
+    }
+    ```
 
 4. Use spaces at the beginning and end of inline objects and arrays: `{ foo: 'bar' }` and `[ 'foo', 'bar' ]`
 5. But . . . if you have longer objects, please use line breaks like this:
@@ -59,13 +65,13 @@ Please try to adhere, as close as possible, to the style and structure already p
 9. Use camel casing for variables. I have an inexplicable and arbitrary dislike for snake case.
 10. Use kebab case (foo-bar) for file names.
 11. Be DRY. If you find yourself reusing code, pull it out into a separate function.
-12. No coffeescript except in tests.
+12. No coffeescript, typescript, or flow. I like javascript the way it is. Please do use es6 features if you like though.
 13. Please comment where appropriate. When in doubt, add a comment. I'm finding more and more that things that seem self-documenting when I write them are actually semi-incomprehensible when I read them. Inline comments are fine most of the time, though jsdoc style block comments before functions are nice too.
 
 ## Testing
 
-Please write tests for any added feature or bug fix. I use coffeescript for tests, with mocha and mocha-given, which has a nice, terse syntax. Tests are run with gulp. 
+Please write tests for any added feature or bug fix. Tests are run with gulp. 
 
 ## Commits and Git History
 
-I actually don't care much about commit message formatting or keeping a clean history via squashes. Obviously, if you _want_ to do those things, go for the gold. In general, I think a commit message should be atomic (which is to say, if you need to use the word "and," then it should be two commits), should summarize the changes in the commit, and should use present tense, as in "Fix bug" (not "Fixed" or "Fixes"). 
+I actually don't care much about commit message formatting or keeping a clean history via squashes. Obviously, if you _want_ to do those things, that's fine, but I won't make you. In general, I think a commit message should be atomic (which is to say, if you need to use the word "and," then it should be two commits), should summarize the changes in the commit, and should use present tense, as in "Fix bug" (not "Fixed" or "Fixes"). 
