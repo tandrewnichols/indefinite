@@ -3,37 +3,37 @@ require('should');
 describe('indefinite', () => {
   const indefinite = require('../lib/indefinite');
 
-  context('a noun that starts with a vowel', () => {
+  context('a word that starts with a vowel', () => {
     it('should be prefixed with an', () => {
       indefinite('apple').should.equal('an apple');
     })
   })
 
-  context('a noun that starts with a consonant', () => {
+  context('a word that starts with a consonant', () => {
     it('should be prefixed with a', () => {
       indefinite('banana').should.equal('a banana');
     })
   })
 
-  context('a noun that starts with a capital vowel', () => {
+  context('a word that starts with a capital vowel', () => {
     it('should be maintain capitalization', () => {
       indefinite('Apple').should.equal('an Apple');
     })
   })
 
-  context('a noun that starts with a capital consonant', () => {
+  context('a word that starts with a capital consonant', () => {
     it('should maintain capitalization', () => {
       indefinite('Banana').should.equal('a Banana');
     })
   })
 
-  context('a noun that starts with a vowel when capitalize is passed in', () => {
+  context('a word that starts with a vowel when capitalize is passed in', () => {
     it('should capitalize the article', () => {
       indefinite('apple', { capitalize: true }).should.equal('An apple');
     })
   })
 
-  context('a noun that starts with a consonant when capitalize is passed in', () => {
+  context('a word that starts with a consonant when capitalize is passed in', () => {
     it('should capitalize the article', () => {
       indefinite('banana', { capitalize: true }).should.equal('A banana');
     })
@@ -60,6 +60,48 @@ describe('indefinite', () => {
   context('an acronym that starts with U but with caseInsensitive passed in', () => {
     it('should be prefixed with an', () => {
       indefinite('UNCLE', { caseInsensitive: true }).should.equal('an UNCLE');
+    })
+  })
+
+  context('an irregular word beginning with a silent consonant', () => {
+    it('should be prefixed with an', () => {
+      indefinite('honor').should.equal('an honor');
+    })
+  })
+
+  context('an irregular word beginning with a vowel that makes a consonant sound', () => {
+    it('should be prefixed with a', () => {
+      indefinite('ukelele').should.equal('a ukelele');
+    })
+  })
+
+  context('an irregular word when multiple words are passed in', () => {
+    it('should be prefixed based on the first word only', () => {
+      indefinite('ouija board').should.equal('a ouija board');
+    })
+  })
+
+  context('an irregular word that is hyphenated is passed in', () => {
+    it('should be prefixed based on the first part of the word only', () => {
+      indefinite('honor-bound').should.equal('an honor-bound');
+    })
+  })
+
+  context('a plural form of an irregular word is passed in', () => {
+    it('should be prefixed based on the singular form', () => {
+      indefinite('hours').should.equal('an hours');
+    })
+  })
+
+  context('an irregular plural form of an irregular word is passed in', () => {
+    it('should be prefixed based on the singular form', () => {
+      indefinite('heiresses').should.equal('an heiresses');
+    })
+  })
+
+  context('a possessive form of an irregular word is passed in', () => {
+    it('should be prefixed based on the non-possessive form', () => {
+      indefinite('heir\'s').should.equal('an heir\'s');
     })
   })
 })
