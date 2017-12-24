@@ -39,7 +39,6 @@
     "gulp": "github:gulpjs/gulp#4.0",
     "gulp-codeclimate-reporter": "github:tandrewnichols/gulp-codeclimate-reporter",
     "gulp-eslint": "^4.0.0",
-    "gulp-open": "^2.0.0",
     "gulp-rename": "^1.2.2",
     "karma": "^2.0.0",
     "karma-chrome-launcher": "^2.2.0",
@@ -48,6 +47,7 @@
     "karma-webpack": "^2.0.9",
     "mocha": "^4.0.1",
     "nyc": "^11.4.1",
+    "opn": "^5.1.0",
     "rimraf": "^2.6.2",
     "should": "^13.1.3",
     "webpack": "^3.10.0"
