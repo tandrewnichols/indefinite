@@ -99,6 +99,12 @@ describe('indefinite', () => {
     })
   })
 
+  context('a past tense verb form of an irregular word is passed in', () => {
+    it('should be prefixed based on the present tense', () => {
+      indefinite('honored').should.equal('an honored');
+    })
+  })
+
   context('a possessive form of an irregular word is passed in', () => {
     it('should be prefixed based on the non-possessive form', () => {
       indefinite('heir\'s').should.equal('an heir\'s');
