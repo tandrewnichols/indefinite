@@ -1,8 +1,7 @@
 const gulp = require('gulp');
-const open = require('gulp-open');
+const open = require('opn');
 
-gulp.task('open', () => {
-  return gulp.src('./coverage/lcov-report/index.html', { read: false })
-    .pipe(open());
+gulp.task('open', (done) => {
+  open('coverage/lcov-report/index.html', { wait: false }).then(() => done(), done);
 });
 
