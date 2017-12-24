@@ -74,7 +74,7 @@ var checkList = function checkList(word, strip) {
     word = word.replace(regex, '');
   }
 
-  return indefinite.irregularWords.includes(word);
+  return indefinite.irregularWords.indexOf(word) > -1;
 };
 
 var indefinite = function indefinite(noun) {
@@ -84,14 +84,9 @@ var indefinite = function indefinite(noun) {
   var startsWithVowel = /[aeiou]/.test(noun.charAt(0).toLowerCase());
 
   var part = noun.split(/[\s'-]/)[0];
-  var isIrregular = checkList(part);
-
-  if (!isIrregular) {
-    isIrregular = checkList(part, 's');
-    if (!isIrregular) {
-      isIrregular = checkList(part, 'es');
-    }
-  }
+  var isIrregular = [null, 's', 'es', 'ed'].reduce(function (memo, ending) {
+    return memo || checkList(part, ending);
+  }, false);
 
   // logical XOR . . . if it's a or b but not a and b
   var article = !isAcronymWithU && (startsWithVowel || isIrregular) && !(startsWithVowel && isIrregular) ? 'an' : 'a';
@@ -112,13 +107,13 @@ var indefinite = function indefinite(noun) {
  * nouns because adjectives and adverbs that start with these letters could
  * also follow an article when they identify a later noun, as in "a useless
  * tool."
- * 
+ *
  * This is not an attempt at a complete list, but rather a collection of
  * words used in at least moderate frequency. A list of ALL irregular words
  * would be too exhaustive to compile without some sort of tool.
  * http://www.thefreedictionary.com/words-that-start-with-eu says there are
  * over 1800 words starting with "eu" alone.
- * 
+ *
  * At least for now, this list omits proper names, as they aren't USUALLY
  * used in such a way as to require an _indefinite_ article. I can't think,
  * for example, of a case where you'd want to say "a Eustace."
