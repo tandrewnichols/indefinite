@@ -129,7 +129,7 @@ indefinite.irregularWords = [
 'euphemistically', 'euphonically', 'euphorically',
 
 // Nouns: silent h
-'hour', 'heir', 'heiress', 'honesty', 'honor', 'honour',
+'herb', 'hour', 'heir', 'heiress', 'honesty', 'honor', 'honour',
 
 // Adjectives: silent h
 'honest', 'honorous',
