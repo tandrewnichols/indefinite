@@ -68,9 +68,10 @@ window["indefinite"] =
 /* 0 */
 /***/ (function(module, exports) {
 
-var checkList = function checkList(word, strip) {
-  if (strip) {
-    var regex = new RegExp(strip + '$');
+var checkList = function checkList(word, ending) {
+  if (ending) {
+    // If the word ends in the ending, remove it.
+    var regex = new RegExp(ending + '$');
     word = word.replace(regex, '');
   }
 
@@ -83,21 +84,32 @@ var indefinite = function indefinite(noun) {
   var isAcronymWithU = opts.caseInsensitive ? false : /^U[A-Z]+$/.test(noun.split(' ')[0]);
   var startsWithVowel = /[aeiou]/.test(noun.charAt(0).toLowerCase());
 
-  var part = noun.split(/[\s'-]/)[0];
+  // Only check the first word. Also, if it's hyphenated, only
+  // check the first part. Finally, if it's possessive, ignore
+  // the possessive part.
+  var part = noun.split(/[\s'-]/)[0].toLowerCase();
+
+  // Try some variations on the word to determine whether it's irregular.
+  // Specifically, try trimming s, then es, then ed because those are common
+  // forms of plurals and past tense verbs (which can be used like adjectives).
   var isIrregular = [null, 's', 'es', 'ed'].reduce(function (memo, ending) {
     return memo || checkList(part, ending);
   }, false);
 
-  // logical XOR . . . if it's a or b but not a and b
+  /**
+   * If it's an acronym that starts with "u," the article should be "a"
+   * If it starts with a vowel and isn't irregular, it should be "an"
+   * If it starts with a vowel and IS irregular, it should be "a"
+   * If it starts with a consonant and isn't irregular, it should be "a"
+   * If it starts with a consonant and IS irregular, it should be "an"
+   */
   var article = !isAcronymWithU && (startsWithVowel || isIrregular) && !(startsWithVowel && isIrregular) ? 'an' : 'a';
 
-  var phrase = article + ' ' + noun;
-
   if (opts.capitalize) {
-    return phrase.charAt(0).toUpperCase() + phrase.slice(1);
-  } else {
-    return phrase;
+    article = '' + article.charAt(0).toUpperCase() + article.slice(1);
   }
+
+  return article + ' ' + noun;
 };
 
 /**

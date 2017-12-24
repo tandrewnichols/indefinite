@@ -110,4 +110,10 @@ describe('indefinite', () => {
       indefinite('heir\'s').should.equal('an heir\'s');
     })
   })
+
+  context('an irregular word with some capitalization is passed', () => {
+    it('should be treated case-insensitively', () => {
+      indefinite('Hour').should.equal('an Hour');
+    })
+  })
 })
