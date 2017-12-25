@@ -66,35 +66,44 @@ window["indefinite"] =
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-var checkList = function checkList(word, ending) {
-  if (ending) {
-    // If the word ends in the ending, remove it.
-    var regex = new RegExp(ending + '$');
-    word = word.replace(regex, '');
-  }
+var irregulars = __webpack_require__(1);
+var ACRONYM = /^U[A-Z]+$/;
+var STARTS_WITH_VOWEL = /^[aeiou]/;
+var EXTRAS = /[\s'-]/;
 
-  return indefinite.irregularWords.indexOf(word) > -1;
+var xor = function xor(a, b) {
+  return (a || b) && !(a && b);
+};
+var checkForAcronyms = function checkForAcronyms(word, caseInsensitive) {
+  return caseInsensitive ? false : ACRONYM.test(word.split(' ')[0]);
+};
+var cap = function cap(str) {
+  return '' + str.charAt(0).toUpperCase() + str.slice(1);
 };
 
-var indefinite = function indefinite(noun) {
+// Try some variations on the word to determine whether it's irregular.
+// Specifically, try trimming s, then es, then ed because those are common
+// forms of plurals and past tense verbs (which can be used like adjectives).
+var checkForIrregulars = function checkForIrregulars(part) {
+  return [null, 's', 'es', 'ed'].reduce(function (memo, ending) {
+    return memo || irregulars.check(part, ending);
+  }, false);
+};
+
+var indefinite = function indefinite(word) {
   var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
-  var isAcronymWithU = opts.caseInsensitive ? false : /^U[A-Z]+$/.test(noun.split(' ')[0]);
-  var startsWithVowel = /[aeiou]/.test(noun.charAt(0).toLowerCase());
+  var isAcronymWithU = checkForAcronyms(word, opts.caseInsensitive);
+  var startsWithVowel = STARTS_WITH_VOWEL.test(word.toLowerCase());
 
   // Only check the first word. Also, if it's hyphenated, only
   // check the first part. Finally, if it's possessive, ignore
   // the possessive part.
-  var part = noun.split(/[\s'-]/)[0].toLowerCase();
+  var part = word.split(EXTRAS)[0].toLowerCase();
 
-  // Try some variations on the word to determine whether it's irregular.
-  // Specifically, try trimming s, then es, then ed because those are common
-  // forms of plurals and past tense verbs (which can be used like adjectives).
-  var isIrregular = [null, 's', 'es', 'ed'].reduce(function (memo, ending) {
-    return memo || checkList(part, ending);
-  }, false);
+  var isIrregular = checkForIrregulars(part);
 
   /**
    * If it's an acronym that starts with "u," the article should be "a"
@@ -103,13 +112,27 @@ var indefinite = function indefinite(noun) {
    * If it starts with a consonant and isn't irregular, it should be "a"
    * If it starts with a consonant and IS irregular, it should be "an"
    */
-  var article = !isAcronymWithU && (startsWithVowel || isIrregular) && !(startsWithVowel && isIrregular) ? 'an' : 'a';
+  var article = !isAcronymWithU && xor(startsWithVowel, isIrregular) ? 'an' : 'a';
 
-  if (opts.capitalize) {
-    article = '' + article.charAt(0).toUpperCase() + article.slice(1);
+  return opts.capitalize ? cap(article) + ' ' + word : article + ' ' + word;
+};
+
+indefinite.irregularWords = irregulars.list;
+
+module.exports = indefinite;
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports) {
+
+exports.check = function (word, ending) {
+  if (ending) {
+    // If the word ends in the ending, remove it.
+    var regex = new RegExp(ending + '$');
+    word = word.replace(regex, '');
   }
 
-  return article + ' ' + noun;
+  return exports.list.indexOf(word) > -1;
 };
 
 /**
@@ -130,7 +153,7 @@ var indefinite = function indefinite(noun) {
  * used in such a way as to require an _indefinite_ article. I can't think,
  * for example, of a case where you'd want to say "a Eustace."
  */
-indefinite.irregularWords = [
+exports.list = [
 // Nouns: eu like y
 'eunuch', 'eucalyptus', 'eugenics', 'eulogy', 'euphemism', 'euphony', 'euphoria', 'eureka',
 
@@ -141,13 +164,13 @@ indefinite.irregularWords = [
 'euphemistically', 'euphonically', 'euphorically',
 
 // Nouns: silent h
-'herb', 'hour', 'heir', 'heiress', 'honesty', 'honor', 'honour',
+'heir', 'heiress', 'herb', 'homage', 'honesty', 'honor', 'honour', 'hour',
 
 // Adjectives: silent h
 'honest', 'honorous',
 
 // Adverbs: silent h
-'hourly', 'honestly',
+'honestly', 'hourly',
 
 // Nouns: o like w
 'one', 'ouija',
@@ -171,8 +194,6 @@ indefinite.irregularWords = [
 
 // Adjectives: y like i
 'ytterbous', 'ytterbic', 'yttric'];
-
-module.exports = indefinite;
 
 /***/ })
 /******/ ]);
