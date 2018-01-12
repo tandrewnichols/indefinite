@@ -4,6 +4,9 @@
     "mocha": true,
     "es6": true
   },
+  "parserOptions": {
+    "sourceType": "module"
+  },
   "rules": {
     "strict": "off",
     "quotes": ["error", "single", {
