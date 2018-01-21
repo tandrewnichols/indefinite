@@ -27,6 +27,12 @@ describe('indefinite', () => {
     })
   })
 
+  context('a word that starts with a capital that would be a irregular if it were an acronym', () => {
+    it('should be prefixed with the regular article', () => {
+      indefinite('Umbrella').should.equal('an Umbrella');
+    })
+  })
+
   context('a word that starts with a vowel when capitalize is passed in', () => {
     it('should capitalize the article', () => {
       indefinite('apple', { capitalize: true }).should.equal('An apple');
@@ -39,13 +45,13 @@ describe('indefinite', () => {
     })
   })
 
-  context('an acronym that starts with A, E, I, or O', () => {
+  context('an acronym that starts with a regular vowel', () => {
     it('should be prefixed with an', () => {
       indefinite('IOU').should.equal('an IOU');
     })
   })
 
-  context('an acronym that starts with U', () => {
+  context('an acronym that starts with an irregular vowel', () => {
     it('should be prefixed with a', () => {
       indefinite('UFO').should.equal('a UFO');
     })
@@ -54,6 +60,12 @@ describe('indefinite', () => {
   context('an acronym that starts with a consonant', () => {
     it('should still be prefixed with a', () => {
       indefinite('CEO').should.equal('a CEO');
+    })
+  })
+
+  context('an acronym that starts with an irregular consonant', () => {
+    it('should be prefixed with an', () => {
+      indefinite('FFA prodigy').should.equal('an FFA prodigy');
     })
   })
 
