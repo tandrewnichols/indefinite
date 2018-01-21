@@ -7,7 +7,7 @@ module.exports = function(config) {
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     frameworks: ['mocha'],
     reporters: ['dots'],
-    browsers: ['Chrome', 'PhantomJS'],
+    browsers: ['Chrome', 'PhantomJS', 'Firefox', 'Safari'],
     preprocessors: {
       'test/**/*.js': ['webpack']
     },
