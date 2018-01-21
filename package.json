@@ -1,7 +1,7 @@
 {
   "name": "indefinite",
   "description": "Prefix a noun with an indefinite article - a or an - based on whether it begins with a vowel",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "main": "lib/indefinite.js",
   "browser": "dist/indefinite.min.js",
   "scripts": {
@@ -43,8 +43,10 @@
     "gulp-rename": "^1.2.2",
     "karma": "^2.0.0",
     "karma-chrome-launcher": "^2.2.0",
+    "karma-firefox-launcher": "^1.1.0",
     "karma-mocha": "^1.3.0",
     "karma-phantomjs-launcher": "^1.0.4",
+    "karma-safari-launcher": "^1.0.0",
     "karma-webpack": "^2.0.9",
     "mocha": "^4.0.1",
     "nyc": "^11.4.1",
