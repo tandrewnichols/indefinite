@@ -4,7 +4,7 @@ const package = require('./package');
 module.exports = {
   entry: {
     'indefinite': require.resolve(`./${package.main}`),
-    'indefinite.min':require.resolve(`./${package.main}`)
+    'indefinite.min': require.resolve(`./${package.main}`)
   },
   output: {
     library: 'indefinite',
@@ -22,7 +22,7 @@ module.exports = {
             loader: 'babel-loader',
             options: {
               presets: [
-                ['env', { modules: false }]
+                [ 'env', { modules: false }]
               ]
             }
           }
