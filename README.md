@@ -14,7 +14,7 @@ It's not hard to check whether a noun begins with a vowel and decide whether to 
 
 As of version 2.0.0, `indefinite` will attempt to detect when an acronym is passed in and treat the response differently. E.g. it should be "a UFO" not "an UFO" because of how we pronounce a long U. This isn't a perfect science, so you might have false positives.
 
-As of version 2.0.2, `indefinite` will also consult a list of irregular words to determine the appropriate article. For example, it should be "an hour" not "a hour." It also _attempts_ to do this with various forms of the words (checking for singular, plural, and even past tense, since past tense verbs can be used as adjectives, as in "an honored man"). This is not an exact science, and the list of irregulars is not exhaustive (and probably won't ever be), but if you find a word that's not in the list that's returning the wrong thing, please open an issue so it can be corrected.
+As of version 2.0.2, `indefinite` will also consult a list of irregular words to determine the appropriate article. For example, it should be "an hour" not "a hour." It also _attempts_ to do this with various forms of the words (checking for singular, plural, and even past tense, since past tense verbs can be used as adjectives, as in "an honored man"). This is not an exact science either, and the list of irregulars is not exhaustive (and probably won't ever be), but if you find a word that's not in the list that's returning the wrong thing, please open an issue so it can be corrected.
 
 ## Usage
 
@@ -38,7 +38,7 @@ console.log(a('UGLY SWEATER', { caseInsensitve: true })); // 'an UGLY SWEATER'
 
 ### Browser
 
-Just serve `dist/indefinite.min.js` however you serve javascript, then call `indefinite("noun")`. The `indefinite` function is added to window.
+Files in `dist` are UMD format, and `package.json` contains a `browser` field pointing to `dist/indefinite.js`, so you should be able to bundle this via webpack, rollup, browserify, etc. or serve it in ye olde javascript fashion and access it via window.
 
 ## Contributing
 
