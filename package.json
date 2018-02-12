@@ -3,7 +3,7 @@
   "description": "Prefix a noun with an indefinite article - a or an - based on whether it begins with a vowel",
   "version": "2.0.4",
   "main": "lib/indefinite.js",
-  "browser": "dist/indefinite.commonjs2.js",
+  "browser": "dist/indefinite.js",
   "scripts": {
     "test": "gulp",
     "travis": "gulp ci",
