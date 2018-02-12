@@ -8,7 +8,7 @@ module.exports = {
   },
   output: {
     library: 'indefinite',
-    libraryTarget: 'window',
+    libraryTarget: 'umd',
     path: `${__dirname}/dist`,
     filename: '[name].js'
   },
@@ -22,7 +22,7 @@ module.exports = {
             loader: 'babel-loader',
             options: {
               presets: [
-                ['env', { modules: false }]
+                [ 'env', { modules: false }]
               ]
             }
           }
