@@ -227,6 +227,8 @@ exports.run = function (word, opts) {
   if (number.startsWith('11') || number.startsWith('8') || number.startsWith('18')) {
     if (IS_AMBIGUOUS.test(number)) {
       article = opts.numbers === 'colloquial' ? 'an' : 'a';
+    } else if ((number.startsWith('11') || number.startsWith('18')) && number.length === 3) {
+      article = 'a';
     } else {
       article = 'an';
     }

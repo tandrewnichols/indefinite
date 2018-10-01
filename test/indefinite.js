@@ -154,6 +154,18 @@ describe('indefinite', () => {
       });
     });
 
+    context('187', () => {
+      it('should be prefixed with a', () => {
+        indefinite('187').should.equal('a 187');
+      });
+    });
+
+    context('800', () => {
+      it('should be prefixed with an', () => {
+        indefinite('800').should.equal('an 800');
+      });
+    });
+
     context('1150 with formal pronunciation', () => {
       it('should be prefixed with a', () => {
         indefinite('1150').should.equal('a 1150');
