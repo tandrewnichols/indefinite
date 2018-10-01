@@ -70,11 +70,34 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, exports) {
+
+var STARTS_WITH_VOWEL = /^[aeiouAEIOU]/;
+
+/**
+ * Array#indexOf is faster IF the word starts with "a" (for example),
+ * but negligibly faster when you have to .toLowerCase() the word, and
+ * slower if the word happens to start with (e.g.) "u."
+ */
+exports.startsWithVowel = function (word) {
+  return STARTS_WITH_VOWEL.test(word);
+};
+
+exports.capitalize = function (article, word, opts) {
+  if (opts.capitalize) {
+    article = "" + article.charAt(0).toUpperCase() + article.slice(1);
+  }
+
+  return article + " " + word;
+};
+
+/***/ }),
+/* 1 */
 /***/ (function(module, exports) {
 
 exports.check = function (word, ending) {
@@ -148,53 +171,29 @@ exports.list = [
 'ytterbous', 'ytterbic', 'yttric'];
 
 /***/ }),
-/* 1 */
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var irregulars = __webpack_require__(0);
-
-var _require = __webpack_require__(2),
-    startsWithVowel = _require.startsWithVowel,
-    xor = _require.xor,
-    bothOrNeither = _require.bothOrNeither,
-    isAcronym = _require.isAcronym,
-    isIrregularAcronym = _require.isIrregularAcronym,
-    checkForIrregulars = _require.checkForIrregulars,
-    capitalize = _require.capitalize,
-    getFirst = _require.getFirst;
+var irregulars = __webpack_require__(1);
+var rules = __webpack_require__(3);
 
 var indefinite = function indefinite(word) {
   var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
-  var hasInitialVowel = startsWithVowel(word);
+  var result = void 0;
 
-  // If it's an acronym, make different checks.
-  if (isAcronym(word, opts.caseInsensitive)) {
-    var isIrregular = isIrregularAcronym(word);
-    /*
-     * If it starts with U: "a"
-     * If it starts with any other vowel: "an"
-     * If it starts with F, H, L, M, N, R, S, or X: "an"
-     * If it starts with any other consonant: "a"
-     */
-    var article = bothOrNeither(hasInitialVowel, isIrregular) ? 'a' : 'an';
-    return capitalize(article, word, opts);
-  } else {
-    // Only check the first word. Also, if it's hyphenated, only
-    // check the first part. Finally, if it's possessive, ignore
-    // the possessive part.
-    var first = getFirst(word);
-    var _isIrregular = checkForIrregulars(first);
+  /**
+   * I'd really prefer to use for of here, but babel converts that
+   * to something using Symbol.iterator, which PhantomJS chokes on.
+   */
+  rules.some(function (rule) {
+    if (rule.check(word, opts)) {
+      result = rule.run(word, opts);
+      return true;
+    }
+  });
 
-    /**
-    * If it starts with a vowel and isn't irregular: "an"
-    * If it starts with a vowel and IS irregular: "a"
-    * If it starts with a consonant and isn't irregular: "a"
-    * If it starts with a consonant and IS irregular: "an"
-    */
-    var _article = xor(hasInitialVowel, _isIrregular) ? 'an' : 'a';
-    return capitalize(_article, word, opts);
-  }
+  return result;
 };
 
 indefinite.irregularWords = irregulars.list;
@@ -202,26 +201,53 @@ indefinite.irregularWords = irregulars.list;
 module.exports = indefinite;
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var irregulars = __webpack_require__(0);
-var ACRONYM = /^[A-Z]+$/;
-var IRREGULAR_ACRONYM = /^[UFHLMNRSX]/;
-var STARTS_WITH_VOWEL = /^[aeiouAEIOU]/;
-var EXTRAS = /[\s'-]/;
+module.exports = [__webpack_require__(4), __webpack_require__(5), __webpack_require__(6)];
 
-/**
- * Array#indexOf is faster IF the word starts with "a" (for example),
- * but negligibly faster when you have to .toLowerCase() the word, and
- * slower if the word happens to start with (e.g.) "u."
- */
-exports.startsWithVowel = function (word) {
-  return STARTS_WITH_VOWEL.test(word);
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var _require = __webpack_require__(0),
+    capitalize = _require.capitalize;
+
+var NUMBERS = /^([0-9,]+)/;
+var IS_AMBIGUOUS = /(11|18)\d{2}/;
+
+exports.check = function (word) {
+  return NUMBERS.test(word);
 };
 
-exports.xor = function (a, b) {
-  return (a || b) && !(a && b);
+exports.run = function (word, opts) {
+  var number = word.toString().match(NUMBERS)[1].replace(/,/g, '');
+  var article = 'a';
+
+  if (number.startsWith('11') || number.startsWith('8') || number.startsWith('18')) {
+    if (IS_AMBIGUOUS.test(number)) {
+      article = opts.numbers === 'colloquial' ? 'an' : 'a';
+    } else {
+      article = 'an';
+    }
+  }
+
+  return capitalize(article, word, opts);
+};
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var _require = __webpack_require__(0),
+    startsWithVowel = _require.startsWithVowel,
+    capitalize = _require.capitalize;
+
+var ACRONYM = /^[A-Z]+$/;
+var IRREGULAR_ACRONYM = /^[UFHLMNRSX]/;
+
+var isIrregularAcronym = function isIrregularAcronym(word) {
+  return IRREGULAR_ACRONYM.test(word.charAt(0));
 };
 
 /**
@@ -232,7 +258,7 @@ exports.xor = function (a, b) {
  * we can just compare the equality of
  * a and b.
  */
-exports.bothOrNeither = function (a, b) {
+var bothOrNeither = function bothOrNeither(a, b) {
   return a === b;
 };
 
@@ -240,12 +266,41 @@ exports.bothOrNeither = function (a, b) {
  * If the entirety of the first word is capital letters
  * and case insensitivity is off, it's an acronym.
  */
-exports.isAcronym = function (word, caseInsensitive) {
+exports.check = function (word, _ref) {
+  var caseInsensitive = _ref.caseInsensitive;
   return caseInsensitive ? false : ACRONYM.test(word.split(' ')[0]);
 };
 
-exports.isIrregularAcronym = function (word) {
-  return IRREGULAR_ACRONYM.test(word.charAt(0));
+exports.run = function (word, opts) {
+  var isIrregular = isIrregularAcronym(word);
+  var initialVowel = startsWithVowel(word);
+  /*
+   * If it starts with U: "a"
+   * If it starts with any other vowel: "an"
+   * If it starts with F, H, L, M, N, R, S, or X: "an"
+   * If it starts with any other consonant: "a"
+   */
+  var article = bothOrNeither(initialVowel, isIrregular) ? 'a' : 'an';
+  return capitalize(article, word, opts);
+};
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var _require = __webpack_require__(0),
+    capitalize = _require.capitalize,
+    startsWithVowel = _require.startsWithVowel;
+
+var irregulars = __webpack_require__(1);
+var EXTRAS = /[\s'-]/;
+
+var getFirst = function getFirst(word) {
+  return word.split(EXTRAS)[0].toLowerCase();
+};
+
+var xor = function xor(a, b) {
+  return (a || b) && !(a && b);
 };
 
 /**
@@ -253,22 +308,31 @@ exports.isIrregularAcronym = function (word) {
  * Specifically, try trimming s, then es, then ed because those are common
  * forms of plurals and past tense verbs (which can be used like adjectives).
  */
-exports.checkForIrregulars = function (part) {
+var checkForIrregulars = function checkForIrregulars(part) {
   return [null, 's', 'es', 'ed'].reduce(function (memo, ending) {
     return memo || irregulars.check(part, ending);
   }, false);
 };
 
-exports.capitalize = function (article, word, opts) {
-  if (opts.capitalize) {
-    article = '' + article.charAt(0).toUpperCase() + article.slice(1);
-  }
-
-  return article + ' ' + word;
+exports.check = function () {
+  return true;
 };
 
-exports.getFirst = function (word) {
-  return word.split(EXTRAS)[0].toLowerCase();
+exports.run = function (word, opts) {
+  // Only check the first word. Also, if it's hyphenated, only
+  // check the first part. Finally, if it's possessive, ignore
+  // the possessive part.
+  var first = getFirst(word);
+  var isIrregular = checkForIrregulars(first);
+
+  /**
+  * If it starts with a vowel and isn't irregular: "an"
+  * If it starts with a vowel and IS irregular: "a"
+  * If it starts with a consonant and isn't irregular: "a"
+  * If it starts with a consonant and IS irregular: "an"
+  */
+  var article = xor(startsWithVowel(word), isIrregular) ? 'an' : 'a';
+  return capitalize(article, word, opts);
 };
 
 /***/ })
