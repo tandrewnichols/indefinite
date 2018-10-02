@@ -214,7 +214,8 @@ var _require = __webpack_require__(0),
     capitalize = _require.capitalize;
 
 var NUMBERS = /^([0-9,]+)/;
-var IS_AMBIGUOUS = /(11|18)\d{2}/;
+var EIGHT_ELEVEN_EIGHTEEN = /^(11|8|18)/;
+var ELEVEN_EIGHTEEN = /^(11|18)/;
 
 exports.check = function (word) {
   return NUMBERS.test(word);
@@ -224,13 +225,20 @@ exports.run = function (word, opts) {
   var number = word.toString().match(NUMBERS)[1].replace(/,/g, '');
   var article = 'a';
 
-  if (number.startsWith('11') || number.startsWith('8') || number.startsWith('18')) {
-    if (IS_AMBIGUOUS.test(number)) {
+  if (EIGHT_ELEVEN_EIGHTEEN.test(number)) {
+    var startsWith11Or18 = ELEVEN_EIGHTEEN.test(number);
+
+    // If the number starts with 11 or 18, the pronunciation is ambiguous
+    // so check the opts.numbers to see how to render it. Otherwise, if it
+    // starts with 11 or 18 and has 2, 5, 8, 11, etc. digits, use 'an'.
+    // Finally, if it starts with an 8, use 'an.' For everything else,
+    // use 'a.'
+    if (startsWith11Or18 && number.length === 4) {
       article = opts.numbers === 'colloquial' ? 'an' : 'a';
-    } else if ((number.startsWith('11') || number.startsWith('18')) && number.length === 3) {
-      article = 'a';
-    } else {
+    } else if (startsWith11Or18 && (number.length - 2) % 3 === 0) {
       article = 'an';
+    } else {
+      article = number.startsWith('8') ? 'an' : 'a';
     }
   }
 

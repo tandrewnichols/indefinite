@@ -130,69 +130,73 @@ describe('indefinite', () => {
   });
 
   context('Numbers', () => {
-    context('11', () => {
+    context('starting with 11', () => {
       it('should be prefixed with an', () => {
         indefinite('11').should.equal('an 11');
+        indefinite('110').should.equal('a 110');
+        indefinite('11000').should.equal('an 11000');
+        indefinite('110000').should.equal('a 110000');
+        indefinite('1100000').should.equal('a 1100000');
+        indefinite('11000000').should.equal('an 11000000');
+        indefinite('110000000').should.equal('a 110000000');
+        indefinite('1100000000').should.equal('a 1100000000');
+        indefinite('11000000000').should.equal('an 11000000000');
+        indefinite('110000000000').should.equal('a 110000000000');
+        indefinite('1100000000000').should.equal('a 1100000000000');
+        indefinite('11000000000000').should.equal('an 11000000000000');
+        indefinite('110000000000000').should.equal('a 110000000000000');
+        indefinite('1100000000000000').should.equal('a 1100000000000000');
+        indefinite('11000000000000000').should.equal('an 11000000000000000');
       });
     });
 
-    context('18', () => {
+    context('starting with 18', () => {
       it('should be prefixed with an', () => {
         indefinite('18').should.equal('an 18');
+        indefinite('180').should.equal('a 180');
+        indefinite('18000').should.equal('an 18000');
+        indefinite('180000').should.equal('a 180000');
+        indefinite('1800000').should.equal('a 1800000');
+        indefinite('18000000').should.equal('an 18000000');
+        indefinite('180000000').should.equal('a 180000000');
+        indefinite('1800000000').should.equal('a 1800000000');
+        indefinite('18000000000').should.equal('an 18000000000');
+        indefinite('180000000000').should.equal('a 180000000000');
+        indefinite('1800000000000').should.equal('a 1800000000000');
+        indefinite('18000000000000').should.equal('an 18000000000000');
+        indefinite('180000000000000').should.equal('a 180000000000000');
+        indefinite('1800000000000000').should.equal('a 1800000000000000');
+        indefinite('18000000000000000').should.equal('an 18000000000000000');
       });
     });
 
-    context('80', () => {
+    context('starting with 8', () => {
       it('should be prefixed with an', () => {
+        indefinite('8').should.equal('an 8');
         indefinite('80').should.equal('an 80');
-      });
-    });
-
-    context('110', () => {
-      it('should be prefixed with a', () => {
-        indefinite('110').should.equal('a 110');
-      });
-    });
-
-    context('187', () => {
-      it('should be prefixed with a', () => {
-        indefinite('187').should.equal('a 187');
-      });
-    });
-
-    context('800', () => {
-      it('should be prefixed with an', () => {
         indefinite('800').should.equal('an 800');
+        indefinite('8000').should.equal('an 8000');
+        indefinite('80000').should.equal('an 80000');
+        indefinite('800000').should.equal('an 800000');
+        indefinite('8000000').should.equal('an 8000000');
+        indefinite('80000000').should.equal('an 80000000');
+        indefinite('800000000').should.equal('an 800000000');
       });
     });
 
-    context('1150 with formal pronunciation', () => {
-      it('should be prefixed with a', () => {
-        indefinite('1150').should.equal('a 1150');
+    context('1100 and 1800 range', () => {
+      context('with formal pronunciation', () => {
+        it('should be prefixed with a', () => {
+          indefinite('1100').should.equal('a 1100');
+          indefinite('1800').should.equal('a 1800');
+        });
       });
-    });
 
-    context('1150 with colloquial pronunciation', () => {
-      it('should be prefixed with an', () => {
-        indefinite('1150', { numbers: 'colloquial' }).should.equal('an 1150');
-      });
-    });
-
-    context('1896 with formal pronunciation', () => {
-      it('should be prefixed with a', () => {
-        indefinite('1896').should.equal('a 1896');
-      });
-    });
-
-    context('1896 with colloquial pronunciation', () => {
-      it('should be prefixed with an', () => {
-        indefinite('1896', { numbers: 'colloquial' }).should.equal('an 1896');
-      });
-    });
-
-    context('80,000', () => {
-      it('should be prefixed with an', () => {
-        indefinite('80,000').should.equal('an 80,000');
+      context('with colloquial pronunciation', () => {
+        it('should be prefixed with an', () => {
+          indefinite('1100', { numbers: 'colloquial' }).should.equal('an 1100');
+          indefinite('1800', { numbers: 'colloquial' }).should.equal('an 1800');
+        });
       });
     });
 
@@ -202,14 +206,9 @@ describe('indefinite', () => {
       });
     });
 
-    context('with the actual number 7', () => {
-      it('should be prefixed with a', () => {
+    context('with actual numbers', () => {
+      it('should be prefixed the same as with strings', () => {
         indefinite(7).should.equal('a 7');
-      });
-    });
-
-    context('with the actual number 8', () => {
-      it('should be prefixed with an', () => {
         indefinite(8).should.equal('an 8');
       });
     });
