@@ -36,12 +36,6 @@
     "eqeqeq": "error",
     "no-extend-native": "error",
     "no-loop-func": "error",
-    "no-magic-numbers": ["error", {
-      "ignore": [-1,0,1],
-      "ignoreArrayIndexes": true,
-      "enforceConst": true,
-      "detectObjects": true
-    }],
     "no-multi-spaces": "error",
     "no-sequences": "error",
     "wrap-iife": ["error", "inside"],

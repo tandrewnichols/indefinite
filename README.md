@@ -28,12 +28,20 @@ console.log(a('hour')); // 'an hour'
 console.log(a('ukelele')); // 'a ukelele'
 ```
 
-Indefinite also accepts an options object as the second parameter. Currently, two options are supported: `capitalize`, for capitalizing the article, and `caseInsensitive` for ignoring the casing of the word passed in (i.e. bypassing the acronym checking). This is useful if, for some reason, you're yelling on the internet and want to make sure "UGLY GARDEN GNOME" doesn't become "a UGLY GARDEN GNOME."
+Indefinite also accepts an options object as the second parameter. The following options are supported:
+
+- `capitalize` - Capitalize the article.
+- `caseInsensitive` - Ignore the casing of the word passed in (i.e. bypassing the acronym checking). This is useful if, for some reason, you're yelling on the internet and want to make sure "UGLY GARDEN GNOME" doesn't become "a UGLY GARDEN GNOME."
+- `numbers` - When numbers are passed in, they are prefixed with "a" except for 8, 11, 18, and higher numbers starting with 8. _However_, numbers like 1100 are ambiguous. Should it be "a one thousand one hundred" or "an eleven hundred"? There's not really any programmatic way to know this for sure, but if _you_ know for sure, you can use the `numbers` option to tell `indefinite` how to handle these cases. The default is "formal" in which numbers are read literally (the way you'd say them if they were written out), but if you pass `numbers: 'colloquial'`, the "eleven hundred"/"eighteen hundred" readings will be used.
 
 ```js
 console.log(a('apple', { capitalize: true })); // 'An apple'
 console.log(a('banana', { capitalize: true })); // 'A banana'
 console.log(a('UGLY SWEATER', { caseInsensitve: true })); // 'an UGLY SWEATER'
+console.log(a('2')); // 'a 2'
+console.log(a('8')); // 'an 8'
+console.log(a('1892')); // 'a 1892' -> read "a one thousand eight hundred ninety-two"
+console.log(a('1892', { numbers: 'colloquial' })); // 'an 1892' -> read "an eighteen ninety-two"
 ```
 
 ### Browser

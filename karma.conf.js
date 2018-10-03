@@ -7,13 +7,14 @@ module.exports = function(config) {
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     frameworks: ['mocha'],
     reporters: ['dots'],
-    browsers: ['Chrome', 'PhantomJS', 'Firefox', 'Safari'],
+    browsers: [ 'Chrome', 'PhantomJS', 'Firefox', 'Safari' ],
     preprocessors: {
       'test/**/*.js': ['webpack']
     },
 
     // list of files / patterns to load in the browser
     files: [
+      'node_modules/babel-polyfill/dist/polyfill.js',
       'test/**/*.js'
     ],
 
@@ -28,7 +29,7 @@ module.exports = function(config) {
                 loader: 'babel-loader',
                 options: {
                   presets: [
-                    ['env', { modules: false }]
+                    [ 'env', { modules: false }]
                   ]
                 }
               }
@@ -40,4 +41,4 @@ module.exports = function(config) {
 
     logLevel: config.LOG_ERROR
   });
-}
+};
