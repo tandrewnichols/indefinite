@@ -156,7 +156,7 @@ exports.list = [
 // Adverbs: o like w
 
 // Nouns: u like y
-'ubiquity', 'udometer', 'ufo', 'uke', 'ukelele', 'ululate', 'unicorn', 'unicycle', 'uniform', 'unify', 'union', 'unison', 'unit', 'unity', 'universe', 'university', 'upas', 'ural', 'uranium', 'urea', 'ureter', 'urethra', 'urine', 'urology', 'urus', 'usage', 'use', 'usual', 'usurp', 'usury', 'utensil', 'uterus', 'utility', 'utopia', 'utricle', 'uvarovite', 'uvea', 'uvula',
+'ubiquity', 'udometer', 'ufo', 'uke', 'ukelele', 'ululate', 'unicorn', 'unicycle', 'uniform', 'unify', 'union', 'unison', 'unit', 'unity', 'universe', 'university', 'upas', 'ural', 'uranium', 'urea', 'ureter', 'urethra', 'urine', 'urology', 'urus', 'usage', 'use', 'user', 'usual', 'usurp', 'usury', 'utensil', 'uterus', 'utility', 'utopia', 'utricle', 'uvarovite', 'uvea', 'uvula',
 
 // Adjectives: u like y
 'ubiquitous', 'ugandan', 'ukrainian', 'unanimous', 'unicameral', 'unified', 'unique', 'unisex', 'universal', 'urinal', 'urological', 'useful', 'useless', 'usurious', 'usurped', 'utilitarian', 'utopic',
@@ -228,11 +228,11 @@ exports.run = function (word, opts) {
   if (EIGHT_ELEVEN_EIGHTEEN.test(number)) {
     var startsWith11Or18 = ELEVEN_EIGHTEEN.test(number);
 
-    // If the number starts with 11 or 18, the pronunciation is ambiguous
-    // so check the opts.numbers to see how to render it. Otherwise, if it
-    // starts with 11 or 18 and has 2, 5, 8, 11, etc. digits, use 'an'.
-    // Finally, if it starts with an 8, use 'an.' For everything else,
-    // use 'a.'
+    // If the number starts with 11 or 18 and is of length 4,
+    // the pronunciation is ambiguous so check opts.numbers to see
+    // how to render it. Otherwise, if it starts with 11 or 18
+    // and has 2, 5, 8, 11, etc. digits, use 'an.' Finally, if it
+    // starts with an 8, use 'an.' For everything else, use 'a.'
     if (startsWith11Or18 && number.length === 4) {
       article = opts.numbers === 'colloquial' ? 'an' : 'a';
     } else if (startsWith11Or18 && (number.length - 2) % 3 === 0) {
