@@ -37,7 +37,7 @@ Indefinite also accepts an options object as the second parameter. The following
 ```js
 console.log(a('apple', { capitalize: true })); // 'An apple'
 console.log(a('banana', { capitalize: true })); // 'A banana'
-console.log(a('UGLY SWEATER', { caseInsensitve: true })); // 'an UGLY SWEATER'
+console.log(a('UGLY SWEATER', { caseInsensitive: true })); // 'an UGLY SWEATER'
 console.log(a('2')); // 'a 2'
 console.log(a('8')); // 'an 8'
 console.log(a('1892')); // 'a 1892' -> read "a one thousand eight hundred ninety-two"
