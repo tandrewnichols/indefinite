@@ -81,6 +81,12 @@ describe('indefinite', () => {
     });
   });
 
+  context('an irregular word beginning with eu that makes a y- sound', () => {
+    it('should be prefixed with a', () => {
+      indefinite('euro').should.equal('a euro');
+    });
+  });
+
   context('an irregular word beginning with a vowel that makes a consonant sound', () => {
     it('should be prefixed with a', () => {
       indefinite('ukelele').should.equal('a ukelele');
