@@ -135,6 +135,32 @@ describe('indefinite', () => {
     });
   });
 
+  context('articleOnly', () => {
+    context('a word that starts with a vowel', () => {
+      it('should return the article only', () => {
+        indefinite('apple', { articleOnly: true }).should.equal('an');
+      });
+    });  
+
+    context('a word that starts with a consonant', () => {
+      it('should return the article only', () => {
+        indefinite('pear', { articleOnly: true }).should.equal('a');
+      });
+    });  
+
+    context('a word that starts with a vowel when capitalize is passed in', () => {
+      it('should capitalize the article', () => {
+        indefinite('apple', { articleOnly: true, capitalize: true }).should.equal('An');
+      });
+    });  
+
+    context('a word that starts with a consonant when capitalize is passed in', () => {
+      it('should capitalize the article', () => {
+        indefinite('pear', { articleOnly: true, capitalize: true }).should.equal('A');
+      });
+    });  
+  });
+
   context('Numbers', () => {
     context('starting with 11', () => {
       it('should be prefixed with an', () => {
