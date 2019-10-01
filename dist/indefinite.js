@@ -88,12 +88,12 @@ exports.startsWithVowel = function (word) {
   return STARTS_WITH_VOWEL.test(word);
 };
 
-exports.capitalize = function (article, word, opts) {
+exports.capitalize = function (article, opts) {
   if (opts.capitalize) {
     article = "" + article.charAt(0).toUpperCase() + article.slice(1);
   }
 
-  return article + " " + word;
+  return article;
 };
 
 /***/ }),
@@ -133,7 +133,7 @@ exports.list = [
 'eunuch', 'eucalyptus', 'eugenics', 'eulogy', 'euphemism', 'euphony', 'euphoria', 'eureka',
 
 // Adjectives: eu like y
-'european', 'euphemistic', 'euphonic', 'euphoric',
+'euro', 'european', 'euphemistic', 'euphonic', 'euphoric',
 
 // Adverbs: eu like y
 'euphemistically', 'euphonically', 'euphorically',
@@ -156,7 +156,7 @@ exports.list = [
 // Adverbs: o like w
 
 // Nouns: u like y
-'ubiquity', 'udometer', 'ufo', 'uke', 'ukelele', 'ululate', 'unicorn', 'unicycle', 'uniform', 'unify', 'union', 'unison', 'unit', 'unity', 'universe', 'university', 'upas', 'ural', 'uranium', 'urea', 'ureter', 'urethra', 'urine', 'urology', 'urus', 'usage', 'use', 'user', 'usual', 'usurp', 'usury', 'utensil', 'uterus', 'utility', 'utopia', 'utricle', 'uvarovite', 'uvea', 'uvula',
+'ubiquity', 'udometer', 'ufo', 'uke', 'ukelele', 'ululate', 'unicorn', 'unicycle', 'uniform', 'unify', 'union', 'unison', 'unit', 'unity', 'universe', 'university', 'upas', 'ural', 'uranium', 'urea', 'ureter', 'urethra', 'urine', 'urologist', 'urology', 'urus', 'usage', 'use', 'user', 'usual', 'usurp', 'usury', 'utensil', 'uterus', 'utility', 'utopia', 'utricle', 'uvarovite', 'uvea', 'uvula',
 
 // Adjectives: u like y
 'ubiquitous', 'ugandan', 'ukrainian', 'unanimous', 'unicameral', 'unified', 'unique', 'unisex', 'universal', 'urinal', 'urological', 'useful', 'useless', 'usurious', 'usurped', 'utilitarian', 'utopic',
@@ -174,13 +174,16 @@ exports.list = [
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
+var _require = __webpack_require__(0),
+    capitalize = _require.capitalize;
+
 var irregulars = __webpack_require__(1);
 var rules = __webpack_require__(3);
 
 var indefinite = function indefinite(word) {
   var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
-  var result = void 0;
+  var article = void 0;
 
   /**
    * I'd really prefer to use for of here, but babel converts that
@@ -188,12 +191,22 @@ var indefinite = function indefinite(word) {
    */
   rules.some(function (rule) {
     if (rule.check(word, opts)) {
-      result = rule.run(word, opts);
+      article = rule.run(word, opts);
       return true;
     }
   });
 
-  return result;
+  return handleOptions(article, opts, word);
+};
+
+var handleOptions = function handleOptions(article, opts, word) {
+  article = capitalize(article, opts);
+
+  if (opts.articleOnly) {
+    return article;
+  }
+
+  return article + ' ' + word;
 };
 
 indefinite.irregularWords = irregulars.list;
@@ -208,10 +221,7 @@ module.exports = [__webpack_require__(4), __webpack_require__(5), __webpack_requ
 
 /***/ }),
 /* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var _require = __webpack_require__(0),
-    capitalize = _require.capitalize;
+/***/ (function(module, exports) {
 
 var NUMBERS = /^([0-9,]+)/;
 var EIGHT_ELEVEN_EIGHTEEN = /^(11|8|18)/;
@@ -242,7 +252,7 @@ exports.run = function (word, opts) {
     }
   }
 
-  return capitalize(article, word, opts);
+  return article;
 };
 
 /***/ }),
@@ -250,8 +260,7 @@ exports.run = function (word, opts) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var _require = __webpack_require__(0),
-    startsWithVowel = _require.startsWithVowel,
-    capitalize = _require.capitalize;
+    startsWithVowel = _require.startsWithVowel;
 
 var ACRONYM = /^[A-Z]+$/;
 var IRREGULAR_ACRONYM = /^[UFHLMNRSX]/;
@@ -281,7 +290,7 @@ exports.check = function (word, _ref) {
   return caseInsensitive ? false : ACRONYM.test(word.split(' ')[0]);
 };
 
-exports.run = function (word, opts) {
+exports.run = function (word) {
   var isIrregular = isIrregularAcronym(word);
   var initialVowel = startsWithVowel(word);
   /*
@@ -291,7 +300,7 @@ exports.run = function (word, opts) {
    * If it starts with any other consonant: "a"
    */
   var article = bothOrNeither(initialVowel, isIrregular) ? 'a' : 'an';
-  return capitalize(article, word, opts);
+  return article;
 };
 
 /***/ }),
@@ -299,7 +308,6 @@ exports.run = function (word, opts) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var _require = __webpack_require__(0),
-    capitalize = _require.capitalize,
     startsWithVowel = _require.startsWithVowel;
 
 var irregulars = __webpack_require__(1);
@@ -342,7 +350,7 @@ exports.run = function (word, opts) {
   * If it starts with a consonant and IS irregular: "an"
   */
   var article = xor(startsWithVowel(word), isIrregular) ? 'an' : 'a';
-  return capitalize(article, word, opts);
+  return article;
 };
 
 /***/ })
