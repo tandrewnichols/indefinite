@@ -51,6 +51,25 @@ console.log(a('1892', { numbers: 'colloquial' })); // 'an 1892' -> read "an eigh
 
 Files in `dist` are UMD format, and `package.json` contains a `browser` field pointing to `dist/indefinite.js`, so you should be able to bundle this via webpack, rollup, browserify, etc. or serve it in ye olde javascript fashion and access it via window.
 
+## Detecting the need for an indefinite article
+
+It's worth mentioning that `indefintite` currently only differentiates between `a` and `an` for you. It doesn't do anything to decide if an indefinite article is required, so if you pass a plural to `indefinite`, you'll get something like "a shoes" back, which is obviously wrong. You can look at [this issue](https://github.com/tandrewnichols/indefinite/issues/23) for more context on why this isn't supported at the moment. It _could_ be in the future, but there are some prohibitive issues to work through first. For now, it is up to you (the consumer) to either call or not call `indefinite` depending on the plurality of the word. You can do something like the suggestion in that issue:
+
+```javascript
+const indefinite = require('indefinite');
+const pluralize = require('pluralize');
+
+module.exports = (subject) => {
+  if (pluralize(subject) === subject) {
+    return subject;
+  }
+
+  return indefinite(subject);
+};
+```
+
+Or you can try [is-singular](https://www.npmjs.com/package/is-singular) or [is-plural](https://www.npmjs.com/package/is-plural).
+
 ## Contributing
 
 Please see [the contribution guidelines](contributing.md).
