@@ -244,5 +244,14 @@ describe('indefinite', () => {
         indefinite(8).should.equal('an 8');
       });
     });
+
+    context('just letters', () => {
+      it('should be prefixed with an', () => {
+        indefinite('a').should.equal('an a')
+      })
+      it('should be prefixed with a', () => {
+        indefinite('b').should.equal('a b')
+      })
+    })
   });
 });
