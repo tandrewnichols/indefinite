@@ -1,4 +1,5 @@
 const webpack = require('webpack');
+const TerserPlugin = require('terser-webpack-plugin');
 const package = require('./package');
 
 module.exports = {
@@ -17,23 +18,18 @@ module.exports = {
       {
         test: /lib.*\.js$/,
         exclude: /node_modules/,
-        use: [
-          {
-            loader: 'babel-loader',
-            options: {
-              presets: [
-                [ 'env', { modules: false }]
-              ]
-            }
-          }
-        ]
+        use: {
+          loader: 'babel-loader'
+        }
       }
     ]
   },
-  plugins: [
-    new webpack.optimize.UglifyJsPlugin({
-      include: /\.min\.js$/,
-      minimize: true
-    })
-  ]
+  optimization: {
+    minimize: true,
+    minimizer: [
+      new TerserPlugin({
+        test: /\.min\.js$/
+      })
+    ]
+  }
 };

@@ -7,7 +7,7 @@
 		exports["indefinite"] = factory();
 	else
 		root["indefinite"] = factory();
-})(typeof self !== 'undefined' ? self : this, function() {
+})(window, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -46,12 +46,32 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// define getter function for harmony exports
 /******/ 	__webpack_require__.d = function(exports, name, getter) {
 /******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, {
-/******/ 				configurable: false,
-/******/ 				enumerable: true,
-/******/ 				get: getter
-/******/ 			});
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
 /******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
 /******/ 	};
 /******/
 /******/ 	// getDefaultExport function for compatibility with non-harmony modules
@@ -69,6 +89,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
 /******/
+/******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
@@ -78,19 +99,19 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ (function(module, exports) {
 
 var STARTS_WITH_VOWEL = /^[aeiouAEIOU]/;
-
 /**
  * Array#indexOf is faster IF the word starts with "a" (for example),
  * but negligibly faster when you have to .toLowerCase() the word, and
  * slower if the word happens to start with (e.g.) "u."
  */
+
 exports.startsWithVowel = function (word) {
   return STARTS_WITH_VOWEL.test(word);
 };
 
 exports.capitalize = function (article, opts) {
   if (opts.capitalize) {
-    article = "" + article.charAt(0).toUpperCase() + article.slice(1);
+    article = "".concat(article.charAt(0).toUpperCase()).concat(article.slice(1));
   }
 
   return article;
@@ -103,13 +124,12 @@ exports.capitalize = function (article, opts) {
 exports.check = function (word, ending) {
   if (ending) {
     // If the word ends in the ending, remove it.
-    var regex = new RegExp(ending + '$');
+    var regex = new RegExp("".concat(ending, "$"));
     word = word.replace(regex, '');
   }
 
   return exports.list.indexOf(word) > -1;
 };
-
 /**
  * Here follows a List of words that take irregular articles because their
  * first letter is either a consonant pronounced like a vowel (hour) or a
@@ -128,49 +148,23 @@ exports.check = function (word, ending) {
  * used in such a way as to require an _indefinite_ article. I can't think,
  * for example, of a case where you'd want to say "a Eustace."
  */
-exports.list = [
-// Nouns: eu like y
-'eunuch', 'eucalyptus', 'eugenics', 'eulogy', 'euphemism', 'euphony', 'euphoria', 'eureka',
 
-// Adjectives: eu like y
-'euro', 'european', 'euphemistic', 'euphonic', 'euphoric',
 
-// Adverbs: eu like y
-'euphemistically', 'euphonically', 'euphorically',
-
-// Nouns: silent h
-'heir', 'heiress', 'herb', 'homage', 'honesty', 'honor', 'honour', 'hour',
-
-// Adjectives: silent h
-'honest', 'honorous',
-
-// Adverbs: silent h
-'honestly', 'hourly',
-
-// Nouns: o like w
-'one', 'ouija',
-
-// Adjectives: o like w
-'once',
-
-// Adverbs: o like w
-
+exports.list = [// Nouns: eu like y
+'eunuch', 'eucalyptus', 'eugenics', 'eulogy', 'euphemism', 'euphony', 'euphoria', 'eureka', // Adjectives: eu like y
+'euro', 'european', 'euphemistic', 'euphonic', 'euphoric', // Adverbs: eu like y
+'euphemistically', 'euphonically', 'euphorically', // Nouns: silent h
+'heir', 'heiress', 'herb', 'homage', 'honesty', 'honor', 'honour', 'hour', // Adjectives: silent h
+'honest', 'honorous', // Adverbs: silent h
+'honestly', 'hourly', // Nouns: o like w
+'one', 'ouija', // Adjectives: o like w
+'once', // Adverbs: o like w
 // Nouns: u like y
-'ubiquity', 'udometer', 'ufo', 'uke', 'ukelele', 'ululate', 'unicorn', 'unicycle', 'uniform', 'unify', 'union', 'unison', 'unit', 'unity', 'universe', 'university', 'upas', 'ural', 'uranium', 'urea', 'ureter', 'urethra', 'urine', 'urologist', 'urology', 'urus', 'usage', 'use', 'user', 'usual', 'usurp', 'usury', 'utensil', 'uterus', 'utility', 'utopia', 'utricle', 'uvarovite', 'uvea', 'uvula', 'utah', 'utahn',
-
-// Adjectives: u like y
-'ubiquitous', 'ugandan', 'ukrainian', 'unanimous', 'unicameral', 'unified', 'unique', 'unisex', 'universal', 'urinal', 'urological', 'useful', 'useless', 'usurious', 'usurped', 'utilitarian', 'utopic',
-
-// Adverbs: u like y
-'ubiquitously', 'unanimously', 'unicamerally', 'uniquely', 'universally', 'urologically', 'usefully', 'uselessly', 'usuriously',
-
-// Nouns: y like i
-'yttria', 'yggdrasil', 'ylem', 'yperite', 'ytterbia', 'ytterbium', 'yttrium',
-
-// Adjectives: y like i
-'ytterbous', 'ytterbic', 'yttric',
-
-// Single letters
+'ubiquity', 'udometer', 'ufo', 'uke', 'ukelele', 'ululate', 'unicorn', 'unicycle', 'uniform', 'unify', 'union', 'unison', 'unit', 'unity', 'universe', 'university', 'upas', 'ural', 'uranium', 'urea', 'ureter', 'urethra', 'urine', 'urologist', 'urology', 'urus', 'usage', 'use', 'user', 'usual', 'usurp', 'usury', 'utensil', 'uterus', 'utility', 'utopia', 'utricle', 'uvarovite', 'uvea', 'uvula', 'utah', 'utahn', // Adjectives: u like y
+'ubiquitous', 'ugandan', 'ukrainian', 'unanimous', 'unicameral', 'unified', 'unique', 'unisex', 'universal', 'urinal', 'urological', 'useful', 'useless', 'usurious', 'usurped', 'utilitarian', 'utopic', // Adverbs: u like y
+'ubiquitously', 'unanimously', 'unicamerally', 'uniquely', 'universally', 'urologically', 'usefully', 'uselessly', 'usuriously', // Nouns: y like i
+'yttria', 'yggdrasil', 'ylem', 'yperite', 'ytterbia', 'ytterbium', 'yttrium', // Adjectives: y like i
+'ytterbous', 'ytterbic', 'yttric', // Single letters
 'f', 'h', 'l', 'm', 'n', 'r', 's', 'u', 'x'];
 
 /***/ }),
@@ -181,24 +175,23 @@ var _require = __webpack_require__(0),
     capitalize = _require.capitalize;
 
 var irregulars = __webpack_require__(1);
+
 var rules = __webpack_require__(3);
 
 var indefinite = function indefinite(word) {
   var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
-  var article = void 0;
-
+  var article;
   /**
    * I'd really prefer to use for of here, but babel converts that
    * to something using Symbol.iterator, which PhantomJS chokes on.
    */
+
   rules.some(function (rule) {
     if (rule.check(word, opts)) {
       article = rule.run(word, opts);
       return true;
     }
   });
-
   return handleOptions(article, opts, word);
 };
 
@@ -209,11 +202,10 @@ var handleOptions = function handleOptions(article, opts, word) {
     return article;
   }
 
-  return article + ' ' + word;
+  return "".concat(article, " ").concat(word);
 };
 
 indefinite.irregularWords = irregulars.list;
-
 module.exports = indefinite;
 
 /***/ }),
@@ -239,13 +231,12 @@ exports.run = function (word, opts) {
   var article = 'a';
 
   if (EIGHT_ELEVEN_EIGHTEEN.test(number)) {
-    var startsWith11Or18 = ELEVEN_EIGHTEEN.test(number);
-
-    // If the number starts with 11 or 18 and is of length 4,
+    var startsWith11Or18 = ELEVEN_EIGHTEEN.test(number); // If the number starts with 11 or 18 and is of length 4,
     // the pronunciation is ambiguous so check opts.numbers to see
     // how to render it. Otherwise, if it starts with 11 or 18
     // and has 2, 5, 8, 11, etc. digits, use 'an.' Finally, if it
     // starts with an 8, use 'an.' For everything else, use 'a.'
+
     if (startsWith11Or18 && number.length === 4) {
       article = opts.numbers === 'colloquial' ? 'an' : 'a';
     } else if (startsWith11Or18 && (number.length - 2) % 3 === 0) {
@@ -271,7 +262,6 @@ var IRREGULAR_ACRONYM = /^[UFHLMNRSX]/;
 var isIrregularAcronym = function isIrregularAcronym(word) {
   return IRREGULAR_ACRONYM.test(word.charAt(0));
 };
-
 /**
  * Both = a && b
  * Neither = !a && !b
@@ -280,14 +270,17 @@ var isIrregularAcronym = function isIrregularAcronym(word) {
  * we can just compare the equality of
  * a and b.
  */
+
+
 var bothOrNeither = function bothOrNeither(a, b) {
   return a === b;
 };
-
 /**
  * If the entirety of the first word is capital letters
  * and case insensitivity is off, it's an acronym.
  */
+
+
 exports.check = function (word, _ref) {
   var caseInsensitive = _ref.caseInsensitive;
   return caseInsensitive ? false : ACRONYM.test(word.split(' ')[0]);
@@ -302,6 +295,7 @@ exports.run = function (word) {
    * If it starts with F, H, L, M, N, R, S, or X: "an"
    * If it starts with any other consonant: "a"
    */
+
   var article = bothOrNeither(initialVowel, isIrregular) ? 'a' : 'an';
   return article;
 };
@@ -314,6 +308,7 @@ var _require = __webpack_require__(0),
     startsWithVowel = _require.startsWithVowel;
 
 var irregulars = __webpack_require__(1);
+
 var EXTRAS = /[\s'-]/;
 
 var getFirst = function getFirst(word) {
@@ -323,12 +318,13 @@ var getFirst = function getFirst(word) {
 var xor = function xor(a, b) {
   return (a || b) && !(a && b);
 };
-
 /**
  * Try some variations on the word to determine whether it's irregular.
  * Specifically, try trimming s, then es, then ed because those are common
  * forms of plurals and past tense verbs (which can be used like adjectives).
  */
+
+
 var checkForIrregulars = function checkForIrregulars(part) {
   return [null, 's', 'es', 'ed'].reduce(function (memo, ending) {
     return memo || irregulars.check(part, ending);
@@ -345,13 +341,13 @@ exports.run = function (word, opts) {
   // the possessive part.
   var first = getFirst(word);
   var isIrregular = checkForIrregulars(first);
-
   /**
   * If it starts with a vowel and isn't irregular: "an"
   * If it starts with a vowel and IS irregular: "a"
   * If it starts with a consonant and isn't irregular: "a"
   * If it starts with a consonant and IS irregular: "an"
   */
+
   var article = xor(startsWithVowel(word), isIrregular) ? 'an' : 'a';
   return article;
 };

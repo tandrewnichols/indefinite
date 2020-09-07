@@ -9,14 +9,6 @@ gulp.task('browser', (done) => {
   }, done).start();
 });
 
-gulp.task('phantom', (done) => {
-  new Server({
-    configFile: path.resolve(__dirname, '../karma.conf.js'),
-    browsers: ['PhantomJS'],
-    singleRun: true
-  }, done).start();
-});
-
 gulp.task('ci', (done) => {
   new Server({
     configFile: path.resolve(__dirname, '../karma.conf.js')

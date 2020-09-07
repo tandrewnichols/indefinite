@@ -8,7 +8,7 @@ module.exports = function(config) {
     frameworks: ['mocha'],
     reporters: ['dots'],
     // Temporarily removing safari because of https://github.com/karma-runner/karma-safari-launcher/issues/29
-    browsers: [ 'Chrome', 'PhantomJS', 'Firefox' ], //, 'Safari' ],
+    browsers: [ 'Chrome', 'Firefox' ], //, 'Safari' ],
     preprocessors: {
       'test/**/*.js': ['webpack']
     },
@@ -25,16 +25,9 @@ module.exports = function(config) {
           {
             test: /\.js$/,
             exclude: /node_modules/,
-            use: [
-              {
-                loader: 'babel-loader',
-                options: {
-                  presets: [
-                    [ 'env', { modules: false }]
-                  ]
-                }
-              }
-            ]
+            use: {
+              loader: 'babel-loader',
+            }
           }
         ]
       }

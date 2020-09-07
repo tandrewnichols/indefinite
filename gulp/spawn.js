@@ -8,4 +8,4 @@ const task = (cmd, args) => {
 };
 
 gulp.task('spawn:nyc', task('npm', [ 'run', 'cover' ]));
-gulp.task('spawn:webpack', task('npm', [ 'run', 'webpack' ]));
+gulp.task('spawn:webpack', task('npm', [ 'run', 'build' ]));
