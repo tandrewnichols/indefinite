@@ -1,7 +1,7 @@
 {
   "name": "indefinite",
   "description": "Prefix a noun with an indefinite article - a or an - based on whether it begins with a vowel",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "main": "lib/indefinite.js",
   "browser": "dist/indefinite.js",
   "scripts": {
