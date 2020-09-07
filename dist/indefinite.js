@@ -168,7 +168,10 @@ exports.list = [
 'yttria', 'yggdrasil', 'ylem', 'yperite', 'ytterbia', 'ytterbium', 'yttrium',
 
 // Adjectives: y like i
-'ytterbous', 'ytterbic', 'yttric'];
+'ytterbous', 'ytterbic', 'yttric',
+
+// Single letters
+'f', 'h', 'l', 'm', 'n', 'r', 's', 'u', 'x'];
 
 /***/ }),
 /* 2 */
