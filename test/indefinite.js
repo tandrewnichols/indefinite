@@ -244,5 +244,31 @@ describe('indefinite', () => {
         indefinite(8).should.equal('an 8');
       });
     });
+
+    context('the letter u', () => {
+      it('should be prefixed with a', () => {
+        indefinite('u').should.equal('a u')
+      });
+    });
+
+    context('the letters f, h, l, m, n, r, s, and x', () => {
+      it('should be prefixed with an', () => {
+        indefinite('f').should.equal('an f')
+        indefinite('h').should.equal('an h')
+        indefinite('l').should.equal('an l')
+        indefinite('m').should.equal('an m')
+        indefinite('n').should.equal('an n')
+        indefinite('r').should.equal('an r')
+        indefinite('s').should.equal('an s')
+        indefinite('x').should.equal('an x')
+      });
+    });
+
+    context('other letters', () => {
+      it('should be prefixed as normal', () => {
+        indefinite('a').should.equal('an a');
+        indefinite('b').should.equal('a b');
+      });
+    });
   });
 });
