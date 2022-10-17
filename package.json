@@ -5,7 +5,7 @@
   "main": "lib/indefinite.js",
   "browser": "dist/indefinite.js",
   "scripts": {
-    "test": "gulp",
+    "test": "NODE_OPTIONS=--openssl-legacy-provider gulp",
     "travis": "gulp ci",
     "build": "webpack --mode production",
     "cover": "nyc --reporter=html --reporter=lcov --reporter=text-summary mocha --timeout=3000 --reporter=dot test/**/*.js"

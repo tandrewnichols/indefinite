@@ -129,6 +129,12 @@ describe('indefinite', () => {
     });
   });
 
+  context('a regular word that happens to have an ending we strip (s, es, ed)', () => {
+    it('should ignore the ending', () => {
+      indefinite('red rum').should.equal('a red rum');
+    });
+  });
+
   context('an irregular word with some capitalization is passed', () => {
     it('should be treated case-insensitively', () => {
       indefinite('Hour').should.equal('an Hour');
