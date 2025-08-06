@@ -111,7 +111,7 @@ exports.list = [
 // Nouns: silent h
 'heir', 'heiress', 'herb', 'homage', 'honesty', 'honor', 'honour', 'honoree', 'hour',
 // Adjectives: silent h
-'honest', 'honorous',
+'honest', 'honorous', 'honorific', 'honorable', 'honourable',
 // Adverbs: silent h
 'honestly', 'hourly',
 // Nouns: o like w
